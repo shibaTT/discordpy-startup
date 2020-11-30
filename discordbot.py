@@ -55,4 +55,3 @@ async def on_timeSignal():
                 await channel.send("退勤！！！！！！！！！！！！！")
 
 on_timeSignal.start()
-client.run("NzgxODI2NDM1NzI3MjI4OTU5.X8DSmw.ng442QLpWw8NOMyroBBQQv3-Yoc")
