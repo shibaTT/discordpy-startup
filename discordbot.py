@@ -28,7 +28,7 @@ async def on_ready():
     print('------')
     game = discord.Game("時報です")
     await bot.change_presence(activity=game)
-    channel.send("うんちbotは死にました")
+    await channel.send("うんちbotは死にました")
 
 
 @tasks.loop(seconds=60)
