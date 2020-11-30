@@ -3,10 +3,10 @@ import time
 import datetime
 import asyncio
 from discord.ext import tasks  # taskというライブラリをdiscord.extという名前にしてる？
-
+from discord.ext import commands
 import os
 
-bot = tasks.Bot(command_prefix="$")
+bot = commands.Bot(command_prefix="$")
 token = os.environ['DISCORD_BOT_TOKEN']
 
 ## Global settings ##
