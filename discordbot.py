@@ -10,7 +10,7 @@ bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
 
 ## Global settings ##
-client = discord.Client()
+client = discord.Client() # なぜかclientに情報が入ってないらしい。逆にbot(変数)にデータがすべて格納されてるっぽい？
 channelID = 758983784963637251
 vChannelID = 758983784963637252
 
@@ -28,7 +28,6 @@ async def on_ready():
     print('------')
     game = discord.Game("時報です")
     await bot.change_presence(activity=game)
-    await channel.send("うんちbotは死にました")
 
 
 @tasks.loop(seconds=60)
@@ -82,7 +81,7 @@ async def on_timeSignal():
                 await voice.disconnect()
                 """
                 
-                await channel.send("退勤！！！！！！！！！！！！！")
+                await channel.send("退勤ァ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！")
 
 on_timeSignal.start()
 bot.run(token)
