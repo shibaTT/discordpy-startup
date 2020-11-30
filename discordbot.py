@@ -21,7 +21,7 @@ vChannelID = 758983784963637252
 ## 初期設定 ##
 @bot.event
 async def on_ready():
-    channel = client.get_channel(channelID)
+    channel = bot.get_channel(channelID)
     print('Logged in as')
     print(bot.user.name)
     print(bot.user.id)
@@ -30,11 +30,11 @@ async def on_ready():
     await bot.change_presence(activity=game)
     channel.send("うんちbotは死にました")
 
-"""
+
 @tasks.loop(seconds=60)
 async def on_timeSignal():
     dt_now = datetime.datetime.now()
-    await client.wait_until_ready()  # on_ready内でget_channelしないとエラー出るので、その対策
+    await bot.wait_until_ready()  # on_ready内でget_channelしないとエラー出るので、その対策
     channel = client.get_channel(channelID)  # チャンネルの対象IDからチャンネル情報を取得
     # ボイスチャンネルにジョイン、部屋情報をvoiceに格納
     # await channel.send("on_timeSignalのループ始動")
@@ -59,7 +59,7 @@ async def on_timeSignal():
 
         elif dt_now.hour == 16:
             if dt_now.minute == 50:
-                
+                """
                 voice = await discord.VoiceChannel.connect(client.get_channel(vChannelID))
                 await channel.send("退勤！！！！！！！！！！！！！")
                 audioSource = discord.FFmpegPCMAudio("18zi.wav")
@@ -67,12 +67,12 @@ async def on_timeSignal():
                 time.sleep(10)
                 
                 await voice.disconnect()
-                
+                """
                 await channel.send("まもなく夕会のお時間です。日報の提出をお願いします。")
 
         elif dt_now.hour == 18:
             if dt_now.minute == 0:
-                
+                """
                 voice = await discord.VoiceChannel.connect(client.get_channel(vChannelID))
                 await channel.send("退勤！！！！！！！！！！！！！")
                 audioSource = discord.FFmpegPCMAudio("18zi.wav")
@@ -80,10 +80,9 @@ async def on_timeSignal():
                 time.sleep(10)
                 
                 await voice.disconnect()
-                
+                """
                 
                 await channel.send("退勤！！！！！！！！！！！！！")
 
 on_timeSignal.start()
-"""
 bot.run(token)
