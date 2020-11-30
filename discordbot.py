@@ -26,7 +26,7 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
-    game = discord.Game("時報")
+    game = discord.Game("時報です")
     await client.change_presence(activity=game)
     channel.send("うんちbotは死にました")
 
@@ -69,19 +69,6 @@ async def on_timeSignal():
                 await voice.disconnect()
                 """
                 await channel.send("まもなく夕会のお時間です。日報の提出をお願いします。")
-                
-        elif dt_now.hour == 17:
-            if dt_now.minute == 38:
-                """
-                voice = await discord.VoiceChannel.connect(client.get_channel(vChannelID))
-                await channel.send("退勤！！！！！！！！！！！！！")
-                audioSource = discord.FFmpegPCMAudio("18zi.wav")
-                voice.play(audioSource)
-                time.sleep(10)
-                
-                await voice.disconnect()
-                """
-                await channel.send("まもなく夕会のお時間です。日報の提出をお願いします。")
 
         elif dt_now.hour == 18:
             if dt_now.minute == 0:
@@ -98,4 +85,4 @@ async def on_timeSignal():
                 await channel.send("退勤！！！！！！！！！！！！！")
 
 on_timeSignal.start()
-bot.run(tok
+bot.run(token)
