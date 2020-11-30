@@ -21,12 +21,14 @@ vChannelID = 758983784963637252
 ## 初期設定 ##
 @client.event
 async def on_ready():
+    channel = client.get_channel(channelID)
     print('Logged in as')
     print(client.user.name)
     print(client.user.id)
     print('------')
     game = discord.Game("時報")
     await client.change_presence(activity=game)
+    channel.send("うんちbotは死にました")
 
 
 @tasks.loop(seconds=60)
