@@ -19,7 +19,7 @@ vChannelID = 758983784963637252
     #discord.opus.load_opus("heroku-buildpack-libopus")
 
 ## 初期設定 ##
-@client.event
+@bot.event
 async def on_ready():
     channel = client.get_channel(channelID)
     print('Logged in as')
