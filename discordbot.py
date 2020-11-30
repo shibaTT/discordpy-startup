@@ -4,6 +4,11 @@ import datetime
 import asyncio
 from discord.ext import tasks  # taskというライブラリをdiscord.extという名前にしてる？
 
+import os
+
+bot = tasks.Bot(command_prefix="$")
+token = os.environ['DISCORD_BOT_TOKEN']
+
 ## Global settings ##
 client = discord.Client()
 channelID = 758983784963637251
@@ -55,3 +60,4 @@ async def on_timeSignal():
                 await channel.send("退勤！！！！！！！！！！！！！")
 
 on_timeSignal.start()
+bot.run(token)
