@@ -23,8 +23,8 @@ vChannelID = 758983784963637252
 async def on_ready():
     channel = client.get_channel(channelID)
     print('Logged in as')
-    print(client.user.name)
-    print(client.user.id)
+    # print(client.user.name)
+    # print(client.user.id)
     print('------')
     game = discord.Game("時報です")
     await client.change_presence(activity=game)
