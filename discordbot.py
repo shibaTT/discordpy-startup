@@ -14,9 +14,9 @@ client = discord.Client()
 channelID = 758983784963637251
 vChannelID = 758983784963637252
 
-if not discord.opus.is_loaded(): 
+#if not discord.opus.is_loaded(): 
     #もし未ロードだったら
-    discord.opus.load_opus("heroku-buildpack-libopus")
+    #discord.opus.load_opus("heroku-buildpack-libopus")
 
 ## 初期設定 ##
 @client.event
