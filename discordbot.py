@@ -98,4 +98,4 @@ async def on_timeSignal():
                 await channel.send("退勤！！！！！！！！！！！！！")
 
 on_timeSignal.start()
-bot.run(token)
+bot.run(tok
