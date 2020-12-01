@@ -67,7 +67,7 @@ async def on_timeSignal():
                 await channel.send("まもなく夕会のお時間です。日報の提出をお願いします。")
                 audioSource = discord.FFmpegPCMAudio("12zi.mp3")
                 voice.play(audioSource)
-                time.sleep(10)
+                time.sleep(250)
                 await voice.disconnect()
 
         elif dt_now.hour == 18:
