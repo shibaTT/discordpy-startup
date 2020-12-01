@@ -14,9 +14,9 @@ client = discord.Client()  # なぜかclientに情報が入ってないらしい
 channelID = 758983784963637251
 vChannelID = 758983784963637252
 
-if not discord.opus.is_loaded():
+# if not discord.opus.is_loaded():
 # もし未ロードだったら
-    discord.opus.load_opus("heroku-buildpack-libopus")
+# discord.opus.load_opus("heroku-buildpack-libopus")
 
 ## 初期設定 ##
 @bot.event
@@ -82,7 +82,7 @@ async def on_timeSignal():
                 await channel.send("退勤ァ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！")
 
         elif dt_now.hour == 10:
-            if dt_now.minute == 10:
+            if dt_now.minute == 23:
 
                 voice = await discord.VoiceChannel.connect(bot.get_channel(vChannelID))
                 await channel.send("退勤！！！！！！！！！！！！！")
