@@ -10,13 +10,13 @@ bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
 
 ## Global settings ##
-client = discord.Client() # なぜかclientに情報が入ってないらしい。逆にbot(変数)にデータがすべて格納されてるっぽい？
+client = discord.Client()  # なぜかclientに情報が入ってないらしい。逆にbot(変数)にデータがすべて格納されてるっぽい？
 channelID = 758983784963637251
 vChannelID = 758983784963637252
 
-#if not discord.opus.is_loaded():
-#もし未ロードだったら
-#discord.opus.load_opus("heroku-buildpack-libopus")
+# if not discord.opus.is_loaded():
+# もし未ロードだったら
+# discord.opus.load_opus("heroku-buildpack-libopus")
 
 ## 初期設定 ##
 @bot.event
@@ -34,7 +34,7 @@ async def on_ready():
 async def on_timeSignal():
     dt_now = datetime.datetime.now()
     await bot.wait_until_ready()  # on_ready内でget_channelしないとエラー出るので、その対策
-    channel = client.get_channel(channelID)  # チャンネルの対象IDからチャンネル情報を取得
+    channel = bot.get_channel(channelID)  # チャンネルの対象IDからチャンネル情報を取得
     # ボイスチャンネルにジョイン、部屋情報をvoiceに格納
     # await channel.send("on_timeSignalのループ始動")
     # ボイスチャンネルの参考元:https://qiita.com/sizumita/items/cafd00fe3e114d834ce3
@@ -64,7 +64,7 @@ async def on_timeSignal():
                 audioSource = discord.FFmpegPCMAudio("18zi.wav")
                 voice.play(audioSource)
                 time.sleep(10)
-                
+
                 await voice.disconnect()
                 """
                 await channel.send("まもなく夕会のお時間です。日報の提出をお願いします。")
@@ -77,11 +77,22 @@ async def on_timeSignal():
                 audioSource = discord.FFmpegPCMAudio("18zi.wav")
                 voice.play(audioSource)
                 time.sleep(10)
-                
+
                 await voice.disconnect()
                 """
-                
+
                 await channel.send("退勤ァ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！")
 
+        elif dt_now.hour == 9:
+            if dt_now.minute == 40:
+
+                voice = await discord.VoiceChannel.connect(client.get_channel(vChannelID))
+                await channel.send("退勤！！！！！！！！！！！！！")
+                audioSource = discord.FFmpegPCMAudio("18zi.wav")
+                voice.play(audioSource)
+                time.sleep(10)
+
+                await voice.disconnect()
+                await channel.send("まもなく夕会のお時間です。日報の提出をお願いします。")
 on_timeSignal.start()
 bot.run(token)
