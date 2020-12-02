@@ -137,13 +137,22 @@ async def get_wea(ctx):
     #w_max = weather_data['forecasts'][0]['temperature']['max']['celsius']
     #w_min = weather_data['forecasts'][0]['temperature']['min']['celsius']
 
+    if weather_data['forecasts'][0]['temperature']['max'] is None:
+        w_max = "データなし"
+    else:
+        w_max = weather_data['forecasts'][0]['temperature']['max']['celsius']
+
+    if weather_data['forecasts'][0]['temperature']['min'] is None:
+        w_min = "データなし"
+    else:
+        w_min = weather_data['forecasts'][0]['temperature']['min']['celsius']
+
     # もしminがnullだったら0を入れる
     # if not w_min:
     #    w_min = 0
 
     # await ctx.send("今日の那覇の天気は" + weather_data['forecasts'][0]['telop'] + "です。\n最高気温は" + weather_data['forecasts'][0]['temperature']['max']['celsius'] + "度です。最低気温は" + weather_data['forecasts'][0]['temperature']['min']['celsius'] + "度です。\nお気をつけて、行ってらっしゃい！")
-    # await ctx.send("おはようございます！今日は" + w_date + "です。今日の那覇の天気は" + w_telop + "です。\n今日も元気に、ヨシ！")
-    await ctx.send(weather_data['forecasts'][0])
+    await ctx.send("おはようございます！今日は" + w_date + "です。今日の那覇の天気は" + w_telop + "です。\n最高気温は" + w_max + "度、最低気温は" + w_min + "今日も元気に、ヨシ！")
 
 
 on_timeSignal.start()
