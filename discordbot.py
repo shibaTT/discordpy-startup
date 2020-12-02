@@ -3,6 +3,7 @@ import time
 import datetime
 import asyncio
 import random
+import requests
 from discord.ext import tasks  # taskというライブラリをdiscord.extという名前にしてる？
 from discord.ext import commands
 import os
@@ -41,6 +42,11 @@ async def on_timeSignal():
     # ボイスチャンネルの参考元:https://qiita.com/sizumita/items/cafd00fe3e114d834ce3
     # ↑情報古いので関数名とクラス名変わってますです
 
+    ## 天気情報の処理 ##
+    url = 'https://weather.tsukumijima.net/api/forecast'
+    payload = {'city': '471010'}
+    weather_data = requests.get(url, params=payload).json()
+
     # 月曜～金曜の間で
     if dt_now.weekday() >= 0 and dt_now.weekday() < 5:
 
@@ -48,6 +54,7 @@ async def on_timeSignal():
         if dt_now.hour == 8:
             if dt_now.minute == 50:
                 await channel.send("8時50分になりました！「出社」をお忘れなく！")
+                await channel.send("今日の那覇の天気は" + weather_data['telop'] + "です。\n最高気温は" + weather_data['temperature']['max']['celsius'] + "度です。最低気温は" + weather_data['temperature']['min']['celsius'] + "度です。\nお気をつけて、行ってらっしゃい！")
 
         elif dt_now.hour == 12:
             if dt_now.minute == 0:
@@ -115,6 +122,16 @@ async def gacha(ctx):
     n = '\n'.join(n)
 
     await ctx.send("今回の10連の結果は以下になります。\n" + n)
+
+
+@bot.command()
+async def get_wea(ctx):
+    ## 天気情報の処理 ##
+    url = 'https://weather.tsukumijima.net/api/forecast'
+    payload = {'city': '471010'}
+    weather_data = requests.get(url, params=payload).json()
+
+    await ctx.send("今日の那覇の天気は" + weather_data['telop'] + "です。\n最高気温は" + weather_data['temperature']['max']['celsius'] + "度です。最低気温は" + weather_data['temperature']['min']['celsius'] + "度です。\nお気をつけて、行ってらっしゃい！")
 
 
 on_timeSignal.start()
