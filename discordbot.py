@@ -94,7 +94,7 @@ async def luck(ctx):
     fortune_length = len(fortune_list)
 
     await ctx.send(
-        "今日の運勢は【" + fortune_list[random.randint(0, fortune_length-1)] + "】だよ！")
+        "今日の運勢は【" + fortune_list[random.randint(0, fortune_length - 1)] + "】だよ！")
 
 
 on_timeSignal.start()
