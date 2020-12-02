@@ -67,13 +67,22 @@ async def on_timeSignal():
                 time.sleep(30)
                 await voice.disconnect()
 
+        elif dt_now.hour == 15:
+            if dt_now.minute == 0:
+                await channel.send("おやつの時間ですね。一度休憩しませんか？")
+                voice = await discord.VoiceChannel.connect(bot.get_channel(vChannelID))
+                audioSource = discord.FFmpegPCMAudio("15zi.wav")
+                voice.play(audioSource)
+                time.sleep(10)
+                await voice.disconnect()
+
         elif dt_now.hour == 16:
             if dt_now.minute == 50:
                 await channel.send("まもなく夕会のお時間です。日報の提出をお願いします。")
                 voice = await discord.VoiceChannel.connect(bot.get_channel(vChannelID))
-                audioSource = discord.FFmpegPCMAudio("12zi.wav")
+                audioSource = discord.FFmpegPCMAudio("17zi.wav")
                 voice.play(audioSource)
-                time.sleep(30)
+                time.sleep(20)
                 await voice.disconnect()
 
         elif dt_now.hour == 18:
@@ -95,6 +104,17 @@ async def luck(ctx):
 
     await ctx.send(
         "今日の運勢は【" + fortune_list[random.randint(0, fortune_length - 1)] + "】だよ！")
+
+
+@bot.command()
+async def gacha(ctx):
+    reality = ['☆☆☆☆☆(UR)', '☆☆☆☆(SSR)', '☆☆☆(SR)', '☆☆(R)', '☆(N)']
+    prob = [0.06, 0.1, 0.175, 0.3, 0.7]
+
+    n = random.choices(reality, weights=prob, k=10)  # 乱数で抽選。引数は「抽選対象」「確率」「総数」
+    n = '\n'.join(n)
+
+    await ctx.send("今回の10連の結果は以下になります。\n" + n)
 
 
 on_timeSignal.start()
