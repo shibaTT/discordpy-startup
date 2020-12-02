@@ -92,7 +92,7 @@ async def luck(ctx):
     fortune_list = ['大吉', '中吉', '吉', '小吉', '末吉', '凶', '大凶', '判断が遅い']
     fortune_length = len(fortune_list)
 
-    ctx.send(
+    await ctx.send(
         "今日の運勢は【" + fortune_list[random.randint(0, fortune_length)] + "】だよ！")
 
 
