@@ -54,18 +54,23 @@ async def on_timeSignal():
                 await channel.send("12時です！お昼ごはんを食べましょう")
                 audioSource = discord.FFmpegPCMAudio("12zi.wav")
                 voice.play(audioSource)
-                time.sleep(30)
+                time.sleep(10)
                 await voice.disconnect()
 
         elif dt_now.hour == 13:
             if dt_now.minute == 0:
+                voice = await discord.VoiceChannel.connect(bot.get_channel(vChannelID))
                 await channel.send("13時です！早く仕事に戻ってください！")
+                audioSource = discord.FFmpegPCMAudio("13zi.mp3")
+                voice.play(audioSource)
+                time.sleep(30)
+                await voice.disconnect()
 
         elif dt_now.hour == 16:
             if dt_now.minute == 50:
                 voice = await discord.VoiceChannel.connect(bot.get_channel(vChannelID))
                 await channel.send("まもなく夕会のお時間です。日報の提出をお願いします。")
-                audioSource = discord.FFmpegPCMAudio("13zi.mp3")
+                audioSource = discord.FFmpegPCMAudio("12zi.wav")
                 voice.play(audioSource)
                 time.sleep(30)
                 await voice.disconnect()
@@ -73,7 +78,6 @@ async def on_timeSignal():
         elif dt_now.hour == 18:
             if dt_now.minute == 0:
                 voice = await discord.VoiceChannel.connect(bot.get_channel(vChannelID))
-                await channel.send("退勤！！！！！！！！！！！！！")
                 audioSource = discord.FFmpegPCMAudio("18zi.wav")
                 voice.play(audioSource)
                 time.sleep(10)
