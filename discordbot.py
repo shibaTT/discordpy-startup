@@ -46,6 +46,8 @@ async def on_timeSignal():
     url = 'https://weather.tsukumijima.net/api/forecast'
     payload = {'city': '471010'}
     weather_data = requests.get(url, params=payload).json()
+    w_date = weather_data['forecasts'][0]['date']  # 日時取得
+    w_telop = weather_data['forecasts'][0]['telop']  # 天気取得
 
     # 月曜～金曜の間で
     if dt_now.weekday() >= 0 and dt_now.weekday() < 5:
@@ -54,7 +56,7 @@ async def on_timeSignal():
         if dt_now.hour == 8:
             if dt_now.minute == 50:
                 await channel.send("8時50分になりました！「出社」をお忘れなく！")
-                await channel.send("今日の那覇の天気は" + weather_data['telop'] + "です。\n最高気温は" + weather_data['temperature']['max']['celsius'] + "度です。最低気温は" + weather_data['temperature']['min']['celsius'] + "度です。\nお気をつけて、行ってらっしゃい！")
+                await channel.send("おはようございます！今日は" + w_date + "です。今日の那覇の天気は" + w_telop + "です。\n今日も元気に、ヨシ！")
 
         elif dt_now.hour == 12:
             if dt_now.minute == 0:
@@ -140,7 +142,8 @@ async def get_wea(ctx):
     #    w_min = 0
 
     # await ctx.send("今日の那覇の天気は" + weather_data['forecasts'][0]['telop'] + "です。\n最高気温は" + weather_data['forecasts'][0]['temperature']['max']['celsius'] + "度です。最低気温は" + weather_data['forecasts'][0]['temperature']['min']['celsius'] + "度です。\nお気をつけて、行ってらっしゃい！")
-    await ctx.send("おはようございます！今日は" + w_date + "です。今日の那覇の天気は" + w_telop + "です。今日も元気に、ヨシ！")
+    # await ctx.send("おはようございます！今日は" + w_date + "です。今日の那覇の天気は" + w_telop + "です。\n今日も元気に、ヨシ！")
+    await ctx.send(weather_data['forecasts'][0])
 
 
 on_timeSignal.start()
