@@ -22,7 +22,7 @@ vChannelID = 758983784963637252
 ## 初期設定 ##
 @bot.event
 async def on_ready():
-    channel = bot.get_channel(channelID)
+    # channel = bot.get_channel(channelID)
     print('Logged in as')
     print(bot.user.name)
     print(bot.user.id)
@@ -87,13 +87,14 @@ async def on_timeSignal():
                 await channel.send("退勤ァ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！")
 
 
-@bot.command(aliases=["un", "運勢"])
+@bot.command(aliases=["un", "unsei"])
 async def luck(ctx):
-    fortune_list = ['大吉', '中吉', '吉', '小吉', '末吉', '凶', '大凶', '判断が遅い']
+    fortune_list = ['大吉', '中吉', '吉', '小吉',
+                    '末吉', '凶', '大凶', '判断が遅い', 'SSR', 'UR']
     fortune_length = len(fortune_list)
 
     await ctx.send(
-        "今日の運勢は【" + fortune_list[random.randint(0, fortune_length)] + "】だよ！")
+        "今日の運勢は【" + fortune_list[random.randint(0, fortune_length-1)] + "】だよ！")
 
 
 on_timeSignal.start()
