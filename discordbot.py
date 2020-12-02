@@ -131,7 +131,7 @@ async def get_wea(ctx):
     payload = {'city': '471010'}
     weather_data = requests.get(url, params=payload).json()
 
-    await ctx.send("今日の那覇の天気は" + weather_data['telop'] + "です。\n最高気温は" + weather_data['temperature']['max']['celsius'] + "度です。最低気温は" + weather_data['temperature']['min']['celsius'] + "度です。\nお気をつけて、行ってらっしゃい！")
+    await ctx.send("今日の那覇の天気は" + weather_data['forecasts']['0']['telop'] + "です。\n最高気温は" + weather_data['forecasts']['0']['temperature']['max']['celsius'] + "度です。最低気温は" + weather_data['forecasts']['0']['temperature']['min']['celsius'] + "度です。\nお気をつけて、行ってらっしゃい！")
 
 
 on_timeSignal.start()
