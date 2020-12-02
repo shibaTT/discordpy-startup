@@ -132,15 +132,15 @@ async def get_wea(ctx):
     weather_data = requests.get(url, params=payload).json()
     w_date = weather_data['forecasts'][0]['date']
     w_telop = weather_data['forecasts'][0]['telop']
-    w_max = weather_data['forecasts'][0]['temperature']['max']['celsius']
-    w_min = weather_data['forecasts'][0]['temperature']['min']['celsius']
+    #w_max = weather_data['forecasts'][0]['temperature']['max']['celsius']
+    #w_min = weather_data['forecasts'][0]['temperature']['min']['celsius']
 
     # もしminがnullだったら0を入れる
     if not w_min:
         w_min = 0
 
     # await ctx.send("今日の那覇の天気は" + weather_data['forecasts'][0]['telop'] + "です。\n最高気温は" + weather_data['forecasts'][0]['temperature']['max']['celsius'] + "度です。最低気温は" + weather_data['forecasts'][0]['temperature']['min']['celsius'] + "度です。\nお気をつけて、行ってらっしゃい！")
-    await ctx.send(weather_data['forecasts'][0]['date'])
+    await ctx.send("おはようございます！今日は" + w_date + "です。今日の那覇の天気は" + w_telop　+ "です。今日も元気に、ヨシ！")
 
 
 on_timeSignal.start()
