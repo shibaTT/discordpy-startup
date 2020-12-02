@@ -2,6 +2,7 @@ import discord
 import time
 import datetime
 import asyncio
+import random
 from discord.ext import tasks  # taskというライブラリをdiscord.extという名前にしてる？
 from discord.ext import commands
 import os
@@ -84,5 +85,15 @@ async def on_timeSignal():
                 await voice.disconnect()
 
                 await channel.send("退勤ァ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！")
+
+
+@bot.command(aliases=["un", "運勢"])
+async def luck(ctx):
+    fortune_list = ['大吉', '中吉', '吉', '小吉', '末吉', '凶', '大凶', '判断が遅い']
+
+    ctx.send(
+        "今日の運勢は【" + fortune_list[random.randint(0, len(fortune_list))] + "】だよ！")
+
+
 on_timeSignal.start()
 bot.run(token)
