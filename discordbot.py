@@ -48,7 +48,7 @@ async def on_timeSignal():
     weather_data = requests.get(url, params=payload).json()
     w_date = weather_data['forecasts'][0]['date']  # 日時取得
     w_telop = weather_data['forecasts'][0]['telop']  # 天気取得
-    #
+    # 時間が遅いと最高気温と最低気温がNone（多言語で言うNull）になってしまうのでその対策
     if weather_data['forecasts'][0]['temperature']['max'] is None:
         w_max = "--"
     else:
@@ -140,7 +140,7 @@ async def gacha(ctx):
 async def get_wea(ctx):
     ## 天気情報の処理 ##
     url = 'https://weather.tsukumijima.net/api/forecast'
-    payload = {'city': '471010'}
+    payload = {'city': '130010'}
     weather_data = requests.get(url, params=payload).json()
     w_date = weather_data['forecasts'][0]['date']
     w_telop = weather_data['forecasts'][0]['telop']
@@ -157,7 +157,7 @@ async def get_wea(ctx):
     else:
         w_min = weather_data['forecasts'][0]['temperature']['min']['celsius']
 
-    await ctx.send("おはようございます！今日は" + w_date + "です。今日の那覇の天気は" + w_telop + "です。\n最高気温は" + w_max + "度、最低気温は" + w_min + "度です。\n今日も元気に、ヨシ！")
+    await ctx.send("おはようございます！今日は" + w_date + "です。今日の東京の天気は" + w_telop + "です。\n最高気温は" + w_max + "度、最低気温は" + w_min + "度です。\n今日も元気に、ヨシ！")
 
 
 on_timeSignal.start()
