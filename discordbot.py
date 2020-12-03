@@ -66,7 +66,7 @@ async def on_timeSignal():
         if dt_now.hour == 8:
             if dt_now.minute == 50:
                 await channel.send("8時50分になりました！「出社」をお忘れなく！")
-                await channel.send("おはようございます！今日は" + w_date + "です。今日の那覇の天気は" + w_telop + "です。\n最高気温は" + w_max + "度、最低気温は" + w_min + "度です。\n今日もご安全に、ヨシ！")
+                await channel.send("おはようございます！今日は" + w_date + "です。今日の那覇の天気は" + w_telop + "です。\n最高気温は" + w_max + "度、最低気温は" + w_min + "度です。\n今日も1日ご安全に、ヨシ！")
 
         elif dt_now.hour == 12:
             if dt_now.minute == 0:
@@ -157,7 +157,7 @@ async def get_wea(ctx):
     else:
         w_min = weather_data['forecasts'][0]['temperature']['min']['celsius']
 
-    await ctx.send("おはようございます！今日は" + w_date + "です。今日の東京の天気は" + w_telop + "です。\n最高気温は" + w_max + "度、最低気温は" + w_min + "度です。\n今日も元気に、ヨシ！")
+    await ctx.send("今日の東京の天気は" + w_telop + "です。\n最高気温は" + w_max + "度、最低気温は" + w_min + "度です。\n今日も1日ご安全に、ヨシ！")
 
 
 on_timeSignal.start()
