@@ -16,6 +16,9 @@ client = discord.Client()  # なぜかclientに情報が入ってないらしい
 channelID = 758983784963637251
 vChannelID = 758983784963637252
 
+## OpenWeatherMap API ##
+w_api = os.environ['OPENWEATHER_API']
+
 # if not discord.opus.is_loaded():
 # もし未ロードだったら
 # discord.opus.load_opus("heroku-buildpack-libopus")
@@ -65,8 +68,12 @@ async def on_timeSignal():
         # 8:50になったら
         if dt_now.hour == 8:
             if dt_now.minute == 50:
-                await channel.send("8時50分になりました！「出社」をお忘れなく！")
                 await channel.send("おはようございます！今日は" + w_date + "です。今日の那覇の天気は" + w_telop + "です。\n最高気温は" + w_max + "度、最低気温は" + w_min + "度です。\n今日も1日ご安全に、ヨシ！")
+                voice = await discord.VoiceChannel.connect(bot.get_channel(vChannelID))
+                audioSource = discord.FFmpegPCMAudio("9zi.wav")
+                voice.play(audioSource)
+                time.sleep(10)
+                await voice.disconnect()
 
         elif dt_now.hour == 12:
             if dt_now.minute == 0:
@@ -158,6 +165,18 @@ async def get_wea(ctx):
         w_min = weather_data['forecasts'][0]['temperature']['min']['celsius']
 
     await ctx.send("今日の東京の天気は" + w_telop + "です。\n最高気温は" + w_max + "度、最低気温は" + w_min + "度です。\n今日も1日ご安全に、ヨシ！")
+
+
+@bot.command()
+async def get_w(ctx):
+    w_lat = 18.55  # 緯度
+    w_lon = 154.40  # 経度
+    api = "http://api.openweathermap.org/data/2.5/onecall?units=metric&lat={lat}&lon={lon}&APPID={key}&lang=ja"
+
+    url = api.format(lat=w_lat, lon=w_lon, key=w_api)
+    response = requests.get(url).json()
+
+    await ctx.send(response['daily']['temp']['min'])
 
 
 on_timeSignal.start()
