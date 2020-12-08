@@ -149,6 +149,36 @@ async def agacha(ctx):
 
 
 @bot.command()
+async def worlds(ctx):
+    worlds_list = ['スカイフック', '採掘場', '溶岩溝', '列車庫', '温泉', 'ハイグラウンド', '火力発電所', 'ツリー', '精錬所',
+                   'エピセンサー', 'キャピトルシティー', '展望', 'アンダーパス', 'リッジ', '燃料庫', '間欠泉', '仕分け工場', '溶岩原', 'ラバシティ', 'ドーム', 'ヒルバレー', 'キャニオンパス', 'スプリングスエンド', '坑道', 'スナイパーズリッジ', 'ロストコンボイ', '']
+    worlds_length = len(worlds_list)
+
+    await ctx.send(
+        "お前のワールズエッジの着地地点は【" + worlds_list[random.randint(0, worlds_length - 1)] + "】だ。神々の加護を。")
+
+
+@bot.command()
+async def kings(ctx):
+    kings_list = ['スラムレイク', 'ピット', 'ランオフ', 'バンカー', '航空基地', 'ガントレット', 'サルベージ', 'マーケット',
+                  '収容所', '砲台', 'キャパシター', 'リッジ', 'ケージ', '研究所', '沼沢', 'ハイドロダム', 'リパルサー', 'マップルーム', '水処理施設']
+    kings_length = len(kings_list)
+
+    await ctx.send(
+        "お前のキングスキャニオンの着地地点は【" + kings_list[random.randint(0, kings_length - 1)] + "】だ。我が名はブロス・フゥンダル！")
+
+
+@bot.command()
+async def olympus(ctx):
+    olympus_list = ['ドック', '母艦', 'オアシス', 'タービン', 'エステート', 'エリジウム', '水耕施設', 'リフト',
+                    '電網', 'ガーデン', 'エネルギー貯蔵庫', 'ハモンド研究所', 'ブロータワー', 'ソーラーアレイ', '軌道砲', '盆栽プラザ']
+    olympus_length = len(olympus_list)
+
+    await ctx.send(
+        "お前のオリンパスの着地地点は【" + olympus_list[random.randint(0, olympus_length - 1)] + "】だ。主神を称えよ。")
+
+
+@bot.command()
 async def get_wea(ctx):
     ## 天気情報の処理 ##
     url = 'https://weather.tsukumijima.net/api/forecast'
