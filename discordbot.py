@@ -140,7 +140,7 @@ async def gacha(ctx):
 @bot.command()
 async def agacha(ctx):
     reality = ['スーパーレジェンド', 'レジェンダリー', 'スーパーレア', 'レア', 'ノーマル']
-    prob = [0.1, 7.4, 17.4, 32.6, 42.6]
+    prob = [0.1, 7.4, 12.4, 22.6, 57.6]
 
     n = random.choices(reality, weights=prob, k=3)  # 乱数で抽選。引数は「抽選対象」「確率」「総数」
     n = '\n'.join(n)
