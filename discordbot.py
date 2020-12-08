@@ -46,21 +46,15 @@ async def on_timeSignal():
     # ↑情報古いので関数名とクラス名変わってますです
 
     ## 天気情報の処理 ##
-    url = 'https://weather.tsukumijima.net/api/forecast'
-    payload = {'city': '471010'}
-    weather_data = requests.get(url, params=payload).json()
-    w_date = weather_data['forecasts'][0]['date']  # 日時取得
-    w_telop = weather_data['forecasts'][0]['telop']  # 天気取得
-    # 時間が遅いと最高気温と最低気温がNone（多言語で言うNull）になってしまうのでその対策
-    if weather_data['forecasts'][0]['temperature']['max'] is None:
-        w_max = "--"
-    else:
-        w_max = weather_data['forecasts'][0]['temperature']['max']['celsius']
+    w_lat = 18.55  # 緯度
+    w_lon = 154.40  # 経度
+    api = "http://api.openweathermap.org/data/2.5/onecall?units=metric&lat={lat}&lon={lon}&APPID={key}&lang=ja"
 
-    if weather_data['forecasts'][0]['temperature']['min'] is None:
-        w_min = "--"
-    else:
-        w_min = weather_data['forecasts'][0]['temperature']['min']['celsius']
+    url = api.format(lat=w_lat, lon=w_lon, key=w_api)
+    response = requests.get(url).json()
+    w_telop = response["daily"][0]["weather"][0]["description"]
+    w_max = response["daily"][0]["temp"]["max"]
+    w_min = response["daily"][0]["temp"]["min"]
 
     # 月曜～金曜の間で
     if dt_now.weekday() >= 0 and dt_now.weekday() < 5:
@@ -68,7 +62,7 @@ async def on_timeSignal():
         # 8:50になったら
         if dt_now.hour == 8:
             if dt_now.minute == 50:
-                await channel.send("おはようございます！今日は" + w_date + "です。今日の那覇の天気は" + w_telop + "です。\n最高気温は" + w_max + "度、最低気温は" + w_min + "度です。\n今日も1日ご安全に、ヨシ！")
+                await channel.send("おはようございます！今日は" + dt_now.strftime('%Y年%m月%d日') + "です。今日のハワイの天気は" + w_telop + "です。\n最高気温は" + str(w_max) + "度、最低気温は" + str(w_min) + "度です。\n今日も1日ご安全に、ヨシ！")
                 voice = await discord.VoiceChannel.connect(bot.get_channel(vChannelID))
                 audioSource = discord.FFmpegPCMAudio("9zi.wav")
                 voice.play(audioSource)
@@ -144,6 +138,17 @@ async def gacha(ctx):
 
 
 @bot.command()
+async def agacha(ctx):
+    reality = ['スーパーレジェンド', 'レジェンダリー', 'スーパーレア', 'レア', 'ノーマル']
+    prob = [0.1, 7.4, 17.4, 32.6, 42.6]
+
+    n = random.choices(reality, weights=prob, k=3)  # 乱数で抽選。引数は「抽選対象」「確率」「総数」
+    n = '\n'.join(n)
+
+    await ctx.send("ﾁｭｲｰﾝ…ｶｺﾝｶｺﾝ………ﾌﾞｼｭｰﾌﾞｼｭｰﾌﾞｼｭｰ（光を放出する）\n" + n)
+
+
+@bot.command()
 async def get_wea(ctx):
     ## 天気情報の処理 ##
     url = 'https://weather.tsukumijima.net/api/forecast'
@@ -169,8 +174,8 @@ async def get_wea(ctx):
 
 @bot.command()
 async def get_w(ctx):
-    w_lat = 18.55  # 緯度
-    w_lon = 154.40  # 経度
+    w_lat = 35.41  # 緯度
+    w_lon = 139.45  # 経度
     api = "http://api.openweathermap.org/data/2.5/onecall?units=metric&lat={lat}&lon={lon}&APPID={key}&lang=ja"
 
     url = api.format(lat=w_lat, lon=w_lon, key=w_api)
@@ -179,7 +184,7 @@ async def get_w(ctx):
     w_max = response["daily"][0]["temp"]["max"]
     w_min = response["daily"][0]["temp"]["min"]
 
-    await ctx.send("今日の東京の天気は" + w_telop + "です。\n最高気温は" + w_max + "度、最低気温は" + w_min + "度です。\n今日も1日ご安全に、ヨシ！")
+    await ctx.send("今日の東京の天気は" + w_telop + "です。\n最高気温は" + str(w_max) + "度、最低気温は" + str(w_min) + "度です。\n今日も1日ご安全に、ヨシ！")
 
 
 on_timeSignal.start()
