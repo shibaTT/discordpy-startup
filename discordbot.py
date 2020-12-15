@@ -110,7 +110,7 @@ async def on_timeSignal():
                 voice = await discord.VoiceChannel.connect(bot.get_channel(vChannelID))
                 audioSource = discord.FFmpegPCMAudio("18zi.mp3")
                 voice.play(audioSource)
-                time.sleep(10)
+                time.sleep(20)
                 await voice.disconnect()
 
                 await channel.send("退勤ァ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！")
