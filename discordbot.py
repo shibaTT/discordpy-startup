@@ -108,7 +108,7 @@ async def on_timeSignal():
         elif dt_now.hour == 18:
             if dt_now.minute == 0:
                 voice = await discord.VoiceChannel.connect(bot.get_channel(vChannelID))
-                audioSource = discord.FFmpegPCMAudio("18zi.wav")
+                audioSource = discord.FFmpegPCMAudio("18zi.mp3")
                 voice.play(audioSource)
                 time.sleep(10)
                 await voice.disconnect()
