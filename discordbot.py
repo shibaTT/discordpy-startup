@@ -52,9 +52,9 @@ async def on_timeSignal():
 
     url = api.format(lat=w_lat, lon=w_lon, key=w_api)
     response = requests.get(url).json()
-    w_telop = response["daily"][0]["weather"][0]["description"]
+    """w_telop = response["daily"][0]["weather"][0]["description"]
     w_max = response["daily"][0]["temp"]["max"]
-    w_min = response["daily"][0]["temp"]["min"]
+    w_min = response["daily"][0]["temp"]["min"]"""
 
     # 月曜～金曜の間で
     if dt_now.weekday() >= 0 and dt_now.weekday() < 5:
@@ -210,11 +210,11 @@ async def get_w(ctx):
 
     url = api.format(lat=w_lat, lon=w_lon, key=w_api)
     response = requests.get(url).json()
-    w_telop = response["daily"][0]["weather"][0]["description"]
+    """w_telop = response["daily"][0]["weather"][0]["description"]
     w_max = response["daily"][0]["temp"]["max"]
-    w_min = response["daily"][0]["temp"]["min"]
+    w_min = response["daily"][0]["temp"]["min"]"""
 
-    await ctx.send("今日の東京の天気は" + w_telop + "です。\n最高気温は" + str(w_max) + "度、最低気温は" + str(w_min) + "度です。\n今日も1日ご安全に、ヨシ！")
+    # await ctx.send("今日の東京の天気は" + w_telop + "です。\n最高気温は" + str(w_max) + "度、最低気温は" + str(w_min) + "度です。\n今日も1日ご安全に、ヨシ！")
 
 
 on_timeSignal.start()
