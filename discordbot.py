@@ -45,23 +45,22 @@ async def on_timeSignal():
     # ボイスチャンネルの参考元:https://qiita.com/sizumita/items/cafd00fe3e114d834ce3
     # ↑情報古いので関数名とクラス名変わってますです
 
-    ## 天気情報の処理 ##
-    w_lat = 18.55  # 緯度
-    w_lon = 154.40  # 経度
-    api = "http://api.openweathermap.org/data/2.5/onecall?units=metric&lat={lat}&lon={lon}&APPID={key}&lang=ja"
-
-    url = api.format(lat=w_lat, lon=w_lon, key=w_api)
-    response = requests.get(url).json()
-    """w_telop = response["daily"][0]["weather"][0]["description"]
-    w_max = response["daily"][0]["temp"]["max"]
-    w_min = response["daily"][0]["temp"]["min"]"""
-
     # 月曜～金曜の間で
     if dt_now.weekday() >= 0 and dt_now.weekday() < 5:
 
         # 8:50になったら
         if dt_now.hour == 8:
             if dt_now.minute == 50:
+                ## 天気情報の処理 ##
+                """w_lat = 18.55  # 緯度
+                w_lon = 154.40  # 経度
+                api = "http://api.openweathermap.org/data/2.5/onecall?units=metric&lat={lat}&lon={lon}&APPID={key}&lang=ja"
+
+                url = api.format(lat=w_lat, lon=w_lon, key=w_api)
+                response = requests.get(url).json()
+                w_telop = response["daily"][0]["weather"][0]["description"]
+                w_max = response["daily"][0]["temp"]["max"]
+                w_min = response["daily"][0]["temp"]["min"]"""
                 # await channel.send("おはようございます！今日は" + dt_now.strftime('%Y年%m月%d日') + "です。今日のハワイの天気は" + w_telop + "です。\n最高気温は" + str(w_max) + "度、最低気温は" + str(w_min) + "度です。\n今日も1日ご安全に、ヨシ！")
                 await channel.send("おはようございます。打刻忘れないでください。（天気予報はAPI上限に達してしまったため休止中です）")
                 voice = await discord.VoiceChannel.connect(bot.get_channel(vChannelID))
@@ -187,8 +186,8 @@ async def get_wea(ctx):
     weather_data = requests.get(url, params=payload).json()
     w_date = weather_data['forecasts'][0]['date']
     w_telop = weather_data['forecasts'][0]['telop']
-    #w_max = weather_data['forecasts'][0]['temperature']['max']['celsius']
-    #w_min = weather_data['forecasts'][0]['temperature']['min']['celsius']
+    # w_max = weather_data['forecasts'][0]['temperature']['max']['celsius']
+    # w_min = weather_data['forecasts'][0]['temperature']['min']['celsius']
 
     if weather_data['forecasts'][0]['temperature']['max'] is None:
         w_max = "--"
