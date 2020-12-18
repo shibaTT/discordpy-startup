@@ -62,7 +62,8 @@ async def on_timeSignal():
         # 8:50になったら
         if dt_now.hour == 8:
             if dt_now.minute == 50:
-                await channel.send("おはようございます！今日は" + dt_now.strftime('%Y年%m月%d日') + "です。今日のハワイの天気は" + w_telop + "です。\n最高気温は" + str(w_max) + "度、最低気温は" + str(w_min) + "度です。\n今日も1日ご安全に、ヨシ！")
+                # await channel.send("おはようございます！今日は" + dt_now.strftime('%Y年%m月%d日') + "です。今日のハワイの天気は" + w_telop + "です。\n最高気温は" + str(w_max) + "度、最低気温は" + str(w_min) + "度です。\n今日も1日ご安全に、ヨシ！")
+                await channel.send("おはようございます。打刻忘れないでください。（天気予報はAPI上限に達してしまったため休止中です）")
                 voice = await discord.VoiceChannel.connect(bot.get_channel(vChannelID))
                 audioSource = discord.FFmpegPCMAudio("9zi.wav")
                 voice.play(audioSource)
@@ -215,6 +216,8 @@ async def get_w(ctx):
     w_min = response["daily"][0]["temp"]["min"]"""
 
     # await ctx.send("今日の東京の天気は" + w_telop + "です。\n最高気温は" + str(w_max) + "度、最低気温は" + str(w_min) + "度です。\n今日も1日ご安全に、ヨシ！")
+
+    await ctx.send(response["daily"])
 
 
 on_timeSignal.start()
