@@ -96,8 +96,8 @@ async def on_timeSignal():
                 time.sleep(10)
                 await voice.disconnect()
 
-        elif dt_now.hour == 16:
-            if dt_now.minute == 50:
+        elif dt_now.hour == 17:
+            if dt_now.minute == 20:
                 await channel.send("まもなく夕会のお時間です。日報の提出をお願いします。")
                 voice = await discord.VoiceChannel.connect(bot.get_channel(vChannelID))
                 audioSource = discord.FFmpegPCMAudio("17zi.wav")
