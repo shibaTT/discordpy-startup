@@ -10,7 +10,7 @@ import os
 import http.client  # 天気予報用（Open Weather Map）
 
 bot = commands.Bot(command_prefix='/')
-token = "NzgxODI2NDM1NzI3MjI4OTU5.X8DSmw.JytE2U5h4oEywPythu8A6oXHFNY"
+token = ""
 
 ## Global settings ##
 # client = discord.Client()  # なぜかclientに情報が入ってないらしい。逆にbot(変数)にデータがすべて格納されてるっぽい？
