@@ -7,17 +7,19 @@ import requests
 from discord.ext import tasks  # taskというライブラリをdiscord.extという名前にしてる？
 from discord.ext import commands
 import os
+import http.client  # 天気予報用（Open Weather Map）
 
 bot = commands.Bot(command_prefix='/')
-token = os.environ['DISCORD_BOT_TOKEN']
+token = "NzgxODI2NDM1NzI3MjI4OTU5.X8DSmw.JytE2U5h4oEywPythu8A6oXHFNY"
 
 ## Global settings ##
-client = discord.Client()  # なぜかclientに情報が入ってないらしい。逆にbot(変数)にデータがすべて格納されてるっぽい？
-channelID = 758983784963637251
+# client = discord.Client()  # なぜかclientに情報が入ってないらしい。逆にbot(変数)にデータがすべて格納されてるっぽい？
+channelID = 781878197465120808  # これ砂場のIDでした
 vChannelID = 758983784963637252
 
 ## OpenWeatherMap API ##
-w_api = os.environ['OPENWEATHER_API']
+w_api = "43835b975fd8940129162cb4fb64dafd"
+we_api = ""
 
 # if not discord.opus.is_loaded():
 # もし未ロードだったら
@@ -45,29 +47,20 @@ async def on_timeSignal():
     # ボイスチャンネルの参考元:https://qiita.com/sizumita/items/cafd00fe3e114d834ce3
     # ↑情報古いので関数名とクラス名変わってますです
 
+    ## 天気情報の処理 ##
+
     # 月曜～金曜の間で
     if dt_now.weekday() >= 0 and dt_now.weekday() < 5:
 
         # 8:50になったら
-        if dt_now.hour == 8:
-            if dt_now.minute == 50:
-                ## 天気情報の処理 ##
-                """w_lat = 18.55  # 緯度
-                w_lon = 154.40  # 経度
-                api = "http://api.openweathermap.org/data/2.5/onecall?units=metric&lat={lat}&lon={lon}&APPID={key}&lang=ja"
-
-                url = api.format(lat=w_lat, lon=w_lon, key=w_api)
-                response = requests.get(url).json()
-                w_telop = response["daily"][0]["weather"][0]["description"]
-                w_max = response["daily"][0]["temp"]["max"]
-                w_min = response["daily"][0]["temp"]["min"]"""
-                # await channel.send("おはようございます！今日は" + dt_now.strftime('%Y年%m月%d日') + "です。今日のハワイの天気は" + w_telop + "です。\n最高気温は" + str(w_max) + "度、最低気温は" + str(w_min) + "度です。\n今日も1日ご安全に、ヨシ！")
-                await channel.send("おはようございます。打刻忘れないでください。（天気予報はAPI上限に達してしまったため休止中です）")
-                voice = await discord.VoiceChannel.connect(bot.get_channel(vChannelID))
-                audioSource = discord.FFmpegPCMAudio("9zi.wav")
-                voice.play(audioSource)
-                time.sleep(10)
-                await voice.disconnect()
+        if dt_now.hour == 14:
+           # if dt_now.minute == 50:
+            voice = await discord.VoiceChannel.connect(bot.get_channel(vChannelID))
+            audioSource = discord.FFmpegPCMAudio(
+                source="E:\Documents\ようわからんデータ入れ場\discord.py\zihoo\\12zi.wav", executable="E:\Documents\ようわからんデータ入れ場\discord.py\zihoo\\ffmpeg.exe")
+            voice.play(audioSource)
+            time.sleep(10)
+            await voice.disconnect()
 
         elif dt_now.hour == 12:
             if dt_now.minute == 0:
@@ -96,8 +89,8 @@ async def on_timeSignal():
                 time.sleep(10)
                 await voice.disconnect()
 
-        elif dt_now.hour == 17:
-            if dt_now.minute == 20:
+        elif dt_now.hour == 16:
+            if dt_now.minute == 50:
                 await channel.send("まもなく夕会のお時間です。日報の提出をお願いします。")
                 voice = await discord.VoiceChannel.connect(bot.get_channel(vChannelID))
                 audioSource = discord.FFmpegPCMAudio("17zi.wav")
@@ -108,9 +101,9 @@ async def on_timeSignal():
         elif dt_now.hour == 18:
             if dt_now.minute == 0:
                 voice = await discord.VoiceChannel.connect(bot.get_channel(vChannelID))
-                audioSource = discord.FFmpegPCMAudio("18zi.mp3")
+                audioSource = discord.FFmpegPCMAudio("18zi.wav")
                 voice.play(audioSource)
-                time.sleep(20)
+                time.sleep(10)
                 await voice.disconnect()
 
                 await channel.send("退勤ァ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！")
@@ -138,47 +131,6 @@ async def gacha(ctx):
 
 
 @bot.command()
-async def agacha(ctx):
-    reality = ['スーパーレジェンド', 'レジェンダリー', 'スーパーレア', 'レア', 'ノーマル']
-    prob = [0.1, 7.4, 12.4, 22.6, 57.6]
-
-    n = random.choices(reality, weights=prob, k=3)  # 乱数で抽選。引数は「抽選対象」「確率」「総数」
-    n = '\n'.join(n)
-
-    await ctx.send("ﾁｭｲｰﾝ…ｶｺﾝｶｺﾝ………ﾌﾞｼｭｰﾌﾞｼｭｰﾌﾞｼｭｰ（光を放出する）\n" + n)
-
-
-@bot.command()
-async def worlds(ctx):
-    worlds_list = ['スカイフック', '採掘場', '溶岩溝', '列車庫', '温泉', 'ハイグラウンド', '火力発電所', 'ツリー', '精錬所',
-                   'エピセンサー', 'キャピトルシティー', '展望', 'アンダーパス', 'リッジ', '燃料庫', '間欠泉', '仕分け工場', '溶岩原', 'ラバシティ', 'ドーム', 'ヒルバレー', 'キャニオンパス', 'スプリングスエンド', '坑道', 'スナイパーズリッジ', 'ロストコンボイ', '']
-    worlds_length = len(worlds_list)
-
-    await ctx.send(
-        "お前のワールズエッジの着地地点は【" + worlds_list[random.randint(0, worlds_length - 1)] + "】だ。神々の加護を。")
-
-
-@bot.command()
-async def kings(ctx):
-    kings_list = ['スラムレイク', 'ピット', 'ランオフ', 'バンカー', '航空基地', 'ガントレット', 'サルベージ', 'マーケット',
-                  '収容所', '砲台', 'キャパシター', 'リッジ', 'ケージ', '研究所', '沼沢', 'ハイドロダム', 'リパルサー', 'マップルーム', '水処理施設']
-    kings_length = len(kings_list)
-
-    await ctx.send(
-        "お前のキングスキャニオンの着地地点は【" + kings_list[random.randint(0, kings_length - 1)] + "】だ。我が名はブロス・フゥンダル！")
-
-
-@bot.command()
-async def olympus(ctx):
-    olympus_list = ['ドック', '母艦', 'オアシス', 'タービン', 'エステート', 'エリジウム', '水耕施設', 'リフト',
-                    '電網', 'ガーデン', 'エネルギー貯蔵庫', 'ハモンド研究所', 'ブロータワー', 'ソーラーアレイ', '軌道砲', '盆栽プラザ']
-    olympus_length = len(olympus_list)
-
-    await ctx.send(
-        "お前のオリンパスの着地地点は【" + olympus_list[random.randint(0, olympus_length - 1)] + "】だ。主神を称えよ。")
-
-
-@bot.command()
 async def get_wea(ctx):
     ## 天気情報の処理 ##
     url = 'https://weather.tsukumijima.net/api/forecast'
@@ -203,7 +155,34 @@ async def get_wea(ctx):
 
 
 @bot.command()
-async def get_w(ctx):
+async def getget(ctx):
+    w_lat = 18.55  # 緯度
+    w_lon = 154.40  # 経度
+    conn = http.client.HTTPSConnection(
+        "community-open-weather-map.p.rapidapi.com")
+
+    headers = {
+        'x-rapidapi-host': "community-open-weather-map.p.rapidapi.com",
+        'x-rapidapi-key': "4944761566mshcf99993c914aa21p1db9d0jsn4589ecd92bae"
+    }
+
+    conn.request(
+        "GET", "/forecast?q=tokyo%252Cjp&units=metric&lang=ja", headers=headers)
+
+    response = conn.getresponse().read()
+
+    w_telop = response["daily"][0]["weather"][0]["description"]
+    w_max = response["daily"][0]["temp"]["max"]
+    w_min = response["daily"][0]["temp"]["min"]
+    w_pres = response["daily"][0]["pressure"]
+
+    await ctx.send("今日の東京の天気は" + w_telop + "です。\n最高気温は" + str(w_max) + "度、最低気温は" + str(w_min) + "度です。\n今日も1日ご安全に、ヨシ！")
+
+    await ctx.send(response)
+
+
+@bot.command()
+async def openweather(ctx):
     w_lat = 35.41  # 緯度
     w_lon = 139.45  # 経度
     api = "http://api.openweathermap.org/data/2.5/onecall?units=metric&lat={lat}&lon={lon}&APPID={key}&lang=ja"
@@ -229,7 +208,7 @@ async def bosyu(ctx, *args):
             else:
                 await ctx.send("人数の指定方法が不正です。もう一度やり直してください")
             if type(number) is int:
-                msg = await ctx.send("everyone 募集件名「{}」、人数は「{}」人で募集します。\n参加したい人は :poop: スタンプを押してください。\n✖を押すと募集終了します。".format(
+                msg = await ctx.send("everyone 募集件名「{}」、人数は「{}人」で募集します。\n参加したい人は :poop: スタンプを押してください。\nバツのスタンプを押すと募集終了します。".format(
                     args[0], number))
                 await msg.add_reaction("💩")
                 await msg.add_reaction("✖")
