@@ -238,7 +238,6 @@ async def bosyu(ctx, *args):
                 while len(rec_members) < number:
                     target_reaction = await bot.wait_for('reaction_add')
                     # print(target_reaction)
-                    print(target_reaction)
                     if target_reaction[1].name != msg.author.name:
                         if target_reaction[0].emoji == '💩':
                             if target_reaction[1] in rec_members:
@@ -248,35 +247,37 @@ async def bosyu(ctx, *args):
                                 # await ctx.send('(テスト用){}を追加'.format(target_reaction[1]))
                         elif target_reaction[0].emoji == '✖':
                             if len(rec_members) <= 0:
-                                for_aho_msg = 'こいつ({})参加者いないから「{}」の募集終了しやがったｗ'.format(
-                                    target_reaction[1].name, args[0])
-                                await msg.edit(content=for_aho_msg)
-                                break
+                                if target_reaction[1] == ctx.author:
+                                    for_aho_msg = 'こいつ({})参加者いないから「{}」の募集終了しやがったｗ'.format(
+                                        target_reaction[1].nick, args[0])
+                                    await msg.edit(content=for_aho_msg)
+                                    break
                             else:
                                 join_members = ""
                                 mention_members = ""
                                 for item in rec_members:
-                                    join_members += item.name + '　'
+                                    join_members += item.nick + '　'
                                     mention_members += "<@" + \
                                         str(item.id) + "> "
-                                for_forced_msg = mention_members + f"「{args[0]}」の募集は強制終了されました。\n【参加者】\n" + \
+                                for_forced_msg = mention_members + f"\n「{args[0]}」の募集は強制終了されました。\n【参加者】\n" + \
                                     join_members
-                                await msg.edit(content=for_forced_msg)
+                                await msg.delete()
+                                await ctx.send(for_forced_msg)
                                 break
                 else:
                     join_members = ""
                     mention_members = ""
                     for item in rec_members:
-                        join_members += item.name + '　'
+                        join_members += item.name.nick + '　'
                         mention_members += "<@" + str(item.id) + "> "
-                    for_end_msg = mention_members + f"「{args[0]}」の募集は定員に達したため終了しました。\n【参加者】\n" + \
+                    for_end_msg = mention_members + f"\n「{args[0]}」の募集は定員に達したため終了しました。\n【参加者】\n" + \
                         join_members
-                    await msg.edit(content=for_end_msg)
+                    await msg.delete()
+                    await ctx.send(for_end_msg)
         else:
             await ctx.send("人数が入力されていません")
     else:
         await ctx.send("募集したいときは、「\/bosyu AmongUsやる 100」のように、コマンドのあとに半角スペースを開けて「件名」と「人数（整数）」を入力してください。")
-
 
 on_timeSignal.start()
 bot.run(token)
