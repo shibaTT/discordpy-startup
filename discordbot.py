@@ -232,24 +232,31 @@ async def bosyu(ctx, *args):
                 msg = await ctx.send("everyone 募集件名「{}」、人数は「{}人」で募集します。\n参加したい人は :poop: スタンプを押してください。\nバツのスタンプを押すと募集終了します。".format(
                     args[0], number))
                 await msg.add_reaction("💩")
-                await msg.add_reaction("✖")
+                await msg.add_reaction("❌")
                 rec_members = []  # 参加者リスト
 
                 while len(rec_members) < number:
-                    target_reaction = await bot.wait_for('reaction_add')
-                    # print(target_reaction)
-                    if target_reaction[1].name != msg.author.name:
-                        if target_reaction[0].emoji == '💩':
-                            if target_reaction[1] in rec_members:
+                    def reaction_check(reaction, user):
+                        msg_same_check = reaction.message.id == msg.id
+                        # return user == msg.author and msg_same_check
+                        return msg_same_check
+
+                    try:
+                        target_reaction, target_user = await bot.wait_for('reaction_add', timeout=3600.0, check=reaction_check)
+                    except asyncio.TimeoutError:
+                        await ctx.send("人がいなかったため終了しました")
+                    else:
+                        if target_reaction.emoji == '💩':
+                            if target_user in rec_members:
                                 await ctx.send("すでにリストに存在してるが？")
                             else:
-                                rec_members.append(target_reaction[1])
-                                # await ctx.send('(テスト用){}を追加'.format(target_reaction[1]))
-                        elif target_reaction[0].emoji == '✖':
+                                rec_members.append(target_user)
+                                # await ctx.send('(テスト用){}を追加'.format(target_user))
+                        elif target_reaction.emoji == '❌':
                             if len(rec_members) <= 0:
-                                if target_reaction[1] == ctx.author:
+                                if target_user == ctx.author:
                                     for_aho_msg = 'こいつ({})参加者いないから「{}」の募集終了しやがったｗ'.format(
-                                        target_reaction[1].nick, args[0])
+                                        target_user.nick, args[0])
                                     await msg.edit(content=for_aho_msg)
                                     break
                             else:
