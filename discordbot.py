@@ -247,7 +247,8 @@ async def bosyu(ctx, *args):
                     try:
                         target_reaction, target_user = await bot.wait_for('reaction_add', timeout=3600.0, check=reaction_check)
                     except asyncio.TimeoutError:
-                        await ctx.send("人がいなかったため終了しました")
+                        await ctx.send(f"「{args[0]}」は人がいなかったため終了しました")
+                        break
                     else:
                         if target_reaction.emoji == '💩':
                             if target_user in rec_members:
